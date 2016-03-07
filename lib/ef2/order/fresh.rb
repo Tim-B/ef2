@@ -24,12 +24,14 @@ module EF2
       end
 
       def login
+        raise "email environment variable missing" if ENV['email'].nil?
+        raise "password environment variable missing" if ENV['password'].nil?
         home = @mechanize.get('https://fresh.amazon.com/')
         login = @mechanize.page.link_with(:text => 'Sign in').click
 
         login.form_with(:name => 'signIn') do |f|
-          f.email = ''
-          f.password = ''
+          f.email = ENV['email']
+          f.password = ENV['password']
         end.submit
       end
 
