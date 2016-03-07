@@ -10,7 +10,7 @@ module EF2
 
         quantity.times do
           products.each do |product|
-            basket.push product.pick strategy
+            basket.concat product.pick strategy
           end
         end
 

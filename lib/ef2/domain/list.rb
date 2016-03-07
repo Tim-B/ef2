@@ -31,11 +31,11 @@ module EF2
         basket = Array.new
 
         recipes.each do |recipe|
-          basket.push recipe.pick strategy
+          basket.concat recipe.pick strategy
         end
 
         products.each do |product|
-          basket.push product.pick strategy
+          basket.concat product.pick(strategy)
         end
 
         basket
