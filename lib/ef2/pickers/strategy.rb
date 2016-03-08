@@ -1,5 +1,5 @@
 module EF2
-  module Picker
+  module Pickers
     class Strategy
 
       def initialize default, *strategies

@@ -1,24 +1,19 @@
+require_relative 'collection_entry'
+require_relative 'entry_registry'
+
 module ProductCollection
 
-  module ClassMethods
+  include EntryRegistry
 
-    def product(entry, &block)
-      @products ||= Array.new
-      @products.push CollectionEntry.new entry.new, &block
-    end
+  def product(entry, &block)
+    @products ||= Array.new
 
-    def get_products
-      @products
-    end
-
-  end
-
-  def self.included(base)
-    base.extend(ClassMethods)
+    item = EntryRegistry.find_by_title entry
+    @products.push CollectionEntry.new item, &block
   end
 
   def products
-    self.class.get_products
+    @products
   end
 
 end

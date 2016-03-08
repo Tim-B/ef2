@@ -1,46 +1,15 @@
 module Entry
 
-  module ClassMethods
-    def title(title)
-      @title = title
-    end
-
-    def description(description)
-      @description = description
-    end
-
-    def categories(*categories)
-      @categories = categories
-    end
-
-    def get_title
-      @title
-    end
-
-    def get_description
-      @description
-    end
-
-    def get_categories
-      @categories
-    end
-
+  def title(title=nil)
+    title.nil? ? @title : @title = title
   end
 
-  def self.included(base)
-    base.extend(ClassMethods)
+  def description(description=nil)
+    description.nil? ? @description : @description = description
   end
 
-  def description
-    self.class.get_description
-  end
-
-  def title
-    self.class.get_title
-  end
-
-  def categories
-    self.class.get_categories || []
+  def categories(*categories)
+    categories.empty? ? @categories : @categories = categories
   end
 
 end

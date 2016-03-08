@@ -1,24 +1,18 @@
+require_relative 'entry_registry'
+
 module RecipeCollection
 
-  module ClassMethods
+  include EntryRegistry
 
-    def recipe(entry, &block)
-      @recipes ||= Array.new
-      @recipes.push CollectionEntry.new entry.new, &block
-    end
+  def recipe(entry, &block)
+    @recipes ||= Array.new
 
-    def get_recipes
-      @recipes
-    end
-
-  end
-
-  def self.included(base)
-    base.extend(ClassMethods)
+    item = EntryRegistry.find_by_title entry
+    @recipes.push CollectionEntry.new item, &block
   end
 
   def recipes
-    self.class.get_recipes
+    @recipes
   end
 
 end

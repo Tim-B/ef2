@@ -1,11 +1,14 @@
 require 'mechanize'
+require_relative '../pickers/strategy'
+require_relative '../pickers/fresh/first'
+require_relative '../pickers/fresh/random'
 
 module EF2
   module Order
     class Fresh
 
       def initialize
-        @picking_strategy = EF2::Picker::Strategy.new EF2::Picker::Random.new, EF2::Picker::First.new
+        @picking_strategy = EF2::Pickers::Strategy.new EF2::Pickers::Fresh::Random.new, EF2::Pickers::Fresh::First.new
 
         @mechanize = Mechanize.new do |agent|
           agent.user_agent_alias = 'Windows Chrome'

@@ -21,6 +21,11 @@ class CollectionEntry
     picker.nil? ? @picker : @picker = picker
   end
 
+  def every(value, time_unit)
+    @every_value = value
+    @every_unit = time_unit
+  end
+
   def pick strategy
     entry.pick strategy, @picker, @quantity
   end

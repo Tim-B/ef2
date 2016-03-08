@@ -1,11 +1,19 @@
+require_relative 'product_collection'
+require_relative 'recipe_collection'
+require_relative '../order/fresh'
+
 module EF2
   module Domain
     class List
       include ProductCollection
       include RecipeCollection
 
-      def self.order order
+      def order order
         @@order = order
+      end
+
+      def read_list list
+        instance_eval(File.read(list))
       end
 
       def print_cart
@@ -23,7 +31,7 @@ module EF2
         end
       end
 
-      def order
+      def form
         @@order.order self
       end
 
