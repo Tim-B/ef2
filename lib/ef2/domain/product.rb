@@ -11,7 +11,9 @@ module EF2
       include CatalogLoader
 
       def pick strategy, picker, quantity
-        strategy.pick picker, skus, quantity
+        picked = strategy.pick picker, skus, quantity
+        EF2::Log.info "Picked #{picked} for product #{title} using strategy #{picker}"
+        picked
       end
 
     end

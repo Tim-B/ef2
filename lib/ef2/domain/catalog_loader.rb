@@ -1,4 +1,5 @@
 require_relative 'entry_registry'
+require_relative '../logger'
 
 module CatalogLoader
 
@@ -15,6 +16,7 @@ module CatalogLoader
       instance = new
       instance.instance_eval(File.read(file))
       EntryRegistry.register instance
+      EF2::Log.info "Loaded catalog item #{instance.title} from file #{file}"
     end
   end
 

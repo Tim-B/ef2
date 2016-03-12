@@ -1,5 +1,6 @@
 require 'thor'
 require_relative 'ef2/version'
+require_relative 'ef2/logger'
 require_relative 'ef2/domain/list'
 require_relative 'ef2/domain/product'
 require_relative 'ef2/domain/recipe'
@@ -11,6 +12,11 @@ class EF2CLI < Thor
 
   desc 'form LIST', 'Forms an order from a supplied LIST and orders it from Amazon Fresh'
   def form(list_file)
+
+    if options[:verbose]
+      EF2::Log.verbose
+    end
+
     credentials_provider = STDINCredentialsSupplier.new self
     order_handler = EF2::Order::Fresh.new credentials_provider
 

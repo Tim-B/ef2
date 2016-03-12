@@ -4,14 +4,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ef2/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "ef2"
-  spec.version       = Ef2::VERSION
-  spec.authors       = ["Tim B."]
+  spec.name = "ef2"
+  spec.version = Ef2::VERSION
+  spec.authors = ["Tim B."]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
-  spec.license       = "MIT"
+  spec.summary = 'A tool for modelling and automating Amazon Fresh orders'
+  spec.description = 'Eliminate the operational burden of supporting your household by automating the deployment of your Amazon Fresh orders.'
+  spec.homepage = 'https://github.com/Tim-B/ef2'
+  spec.license = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
@@ -21,9 +21,9 @@ Gem::Specification.new do |spec|
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
 
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  spec.bindir = "bin"
+  spec.executables << 'ef2'
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'mechanize', '~> 2.7', '>= 2.7.4'

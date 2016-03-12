@@ -43,7 +43,7 @@ product 'Ketchup' do
 end
 ```
 
-Running: `bin/ef2 form examples/basic_list.rb`
+Running: `ef2 form examples/basic_list.rb`
 
 ## Development
 

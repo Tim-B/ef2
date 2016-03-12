@@ -1,6 +1,7 @@
 require_relative 'product_collection'
 require_relative 'recipe_collection'
 require_relative '../order/fresh'
+require_relative '../logger'
 
 module EF2
   module Domain
@@ -8,13 +9,9 @@ module EF2
       include ProductCollection
       include RecipeCollection
 
-      def order order
-        @@order = order
-      end
-
       def read_list list
         cat_dir = File.dirname(list) + '/catalog'
-
+        EF2::Log.info "Loading list #{list}"
         load_catalog cat_dir
         instance_eval(File.read(list))
       end
@@ -35,6 +32,7 @@ module EF2
       end
 
       def form order_handler
+        #print_cart
         order_handler.order self
       end
 
