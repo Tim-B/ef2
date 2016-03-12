@@ -9,6 +9,9 @@ module ProductCollection
     @products ||= Array.new
 
     item = EntryRegistry.find_by_title entry
+    if item.nil?
+      raise 'List generation error: No product called ' + entry + ' has been defined'
+    end
     @products.push CollectionEntry.new item, &block
   end
 

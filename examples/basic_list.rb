@@ -10,5 +10,3 @@ product 'Ketchup' do
   picker :first
   every 6, :weeks
 end
-
-order EF2::Order::Fresh.new

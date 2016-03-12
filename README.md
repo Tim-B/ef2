@@ -24,27 +24,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+You can find an example of a list and catalog under the `examples`` directory.
 
-Example:
+Example list:
 
 ```
-require "ef2"
 
-class BasicList < EF2::Domain::List
+recipe 'Bacon and Eggs'
 
-  recipe EF2::Catalog::Recipes::BaconAndEggs
-
-  product EF2::Catalog::Products::ToiletPaper do
-    quantity 5
-    picker :random
-  end
-
-  order EF2::Order::Fresh.new
-
+product 'Toilet Paper' do
+  quantity 5
+  picker :random
 end
 
+product 'Ketchup' do
+  picker :first
+  every 6, :weeks
+end
 ```
+
+Running: `bin/ef2 form examples/basic_list.rb`
 
 ## Development
 

@@ -13,6 +13,9 @@ module EF2
       end
 
       def read_list list
+        cat_dir = File.dirname(list) + '/catalog'
+
+        load_catalog cat_dir
         instance_eval(File.read(list))
       end
 
@@ -31,8 +34,13 @@ module EF2
         end
       end
 
-      def form
-        @@order.order self
+      def form order_handler
+        order_handler.order self
+      end
+
+      def load_catalog cat_dir
+        EF2::Domain::Product.load_dir(cat_dir + '/products')
+        EF2::Domain::Recipe.load_dir(cat_dir + '/recipes')
       end
 
       def pick strategy
