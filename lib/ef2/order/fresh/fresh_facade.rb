@@ -92,7 +92,6 @@ class FreshFacade
   end
 
   def order_product product
-    puts "Ordering #{product}"
     product_page = @mechanize.get("https://fresh.amazon.com/product?asin=#{product}")
     product_page.form_with(:action => '/ShoppingCartView').submit
   end

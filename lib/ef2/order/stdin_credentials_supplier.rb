@@ -1,3 +1,5 @@
+require 'launchy'
+
 class STDINCredentialsSupplier
 
   def initialize thor
@@ -19,7 +21,7 @@ class STDINCredentialsSupplier
   def get_captcha link
     @thor.say 'You\'ve been CAPTCHA\'d, a CAPTCHA image will open in a few seconds for you to enter'
     sleep(3)
-    puts link
+    Launchy.open(link)
     @thor.ask 'CAPTCHA:'
   end
 

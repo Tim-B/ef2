@@ -2,6 +2,7 @@ require_relative '../pickers/strategy'
 require_relative '../pickers/fresh/first'
 require_relative '../pickers/fresh/random'
 require_relative '../order/fresh/fresh_facade'
+require_relative '../progress'
 
 module EF2
   module Order
@@ -18,11 +19,15 @@ module EF2
 
         basket = list.pick @picking_strategy
 
+        EF2::Progress.set_order_size basket.size
+
         basket.each do |item|
           @fresh_facade.order_product item
+          EF2::Progress.put_order item
         end
-      end
 
+        EF2::Progress.done
+      end
     end
   end
 end
