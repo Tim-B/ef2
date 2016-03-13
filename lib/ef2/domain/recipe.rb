@@ -10,7 +10,7 @@ module EF2
       include ProductCollection
       include CatalogLoader
 
-      def pick strategy, picker, quantity
+      def pick strategy, picker, entry, quantity
         basket = Array.new
 
         quantity.times do
@@ -19,7 +19,7 @@ module EF2
           end
         end
 
-        basket
+        return basket
       end
 
     end

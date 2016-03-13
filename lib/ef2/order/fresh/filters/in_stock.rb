@@ -9,14 +9,14 @@ module EF2
           @fresh_facade = fresh_facade
         end
 
-        def filter product_list
+        def filter product_entry, asin_list
           return_list = Array.new
-          product_list.each do |product|
-            product_model = @fresh_facade.get_product product
+          asin_list.each do |asin|
+            product_model = @fresh_facade.get_product asin
             if product_model.in_stock
-              return_list.push product
+              return_list.push asin
             else
-              EF2::Log.info "Filtering out #{product} because it's out of stock"
+              EF2::Log.info "Filtering out #{asin} because it's out of stock"
             end
           end
           return return_list

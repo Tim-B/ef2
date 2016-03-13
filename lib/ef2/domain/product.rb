@@ -10,8 +10,8 @@ module EF2
       include ASINCollection
       include CatalogLoader
 
-      def pick strategy, picker, quantity
-        picked = strategy.pick picker, asins, quantity
+      def pick strategy, picker, entry, quantity
+        picked = strategy.pick picker, entry, asins, quantity
         EF2::Log.info "Picked #{picked} for product #{title} using strategy #{picker}"
         picked
       end

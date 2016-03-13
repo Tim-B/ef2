@@ -4,33 +4,28 @@ module EF2
   class Progress
     @bar = PowerBar.new
     @bar.settings.tty.finite.show_eta = false
-    @progress = 0
-    @order_size = 0
-    @pick_size = 0
-    @pick_offset = 0
 
-    def self.set_pick_size size
-      @pick_size = size * 5
+    def self.set_stages(stages)
+      @stages = stages
+      @stage = 0
+      @progress = 0
+      @size = 0
     end
 
-    def self.set_order_size size
-      @pick_offset = (size / 5).round
-      @order_size = size + @pick_offset
-      @progress = @pick_offset
+    def self.start_stage(stage_size)
+      @stage_size = stage_size
+      @stage += 1
+      @size = stage_size * @stages
+      @progress = stage_size * (@stage - 1)
     end
 
-    def self.put_order asin
+    def self.stage_progress(message)
       @progress += 1
-      @bar.show(:msg => "Ordering #{asin}", :done => @progress, :total => @order_size)
-    end
-
-    def self.put_pick name
-      @progress += 1
-      @bar.show(:msg => "Picking #{name}", :done => @progress, :total => @pick_size)
+      @bar.show(:msg => message, :done => @progress, :total => @size)
     end
 
     def self.done
-      @bar.show(:msg => 'Done!', :done => @order_size, :total => @order_size)
+      @bar.show(:msg => 'Done', :done => 100, :total => 100)
     end
   end
 end

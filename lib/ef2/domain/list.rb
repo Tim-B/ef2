@@ -42,22 +42,22 @@ module EF2
         EF2::Domain::Recipe.load_dir(cat_dir + '/recipes')
       end
 
-      def pick strategy
+      def pick product_picker
         basket = Array.new
 
-        EF2::Progress.set_pick_size recipes.size + products.size
+        EF2::Progress.start_stage recipes.size + products.size
 
         recipes.each do |recipe|
-          EF2::Progress.put_pick recipe.entry.title
-          basket.concat recipe.pick strategy
+          EF2::Progress.stage_progress "Picking #{recipe.entry.title}"
+          basket.concat recipe.pick product_picker
         end
 
         products.each do |product|
-          EF2::Progress.put_pick product.entry.title
-          basket.concat product.pick(strategy)
+          EF2::Progress.stage_progress "Picking #{product.entry.title}"
+          basket.concat product.pick product_picker
         end
 
-        basket
+        return basket
       end
 
     end

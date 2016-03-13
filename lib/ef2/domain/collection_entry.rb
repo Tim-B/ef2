@@ -16,13 +16,8 @@ class CollectionEntry
     quantity.nil? ? @quantity : @quantity = quantity
   end
 
-  def every(value, time_unit)
-    @every_value = value
-    @every_unit = time_unit
-  end
-
-  def pick strategy
+  def pick(strategy)
     @picker ||= :first
-    entry.pick strategy, @picker, @quantity
+    entry.pick strategy, @picker, self, @quantity
   end
 end

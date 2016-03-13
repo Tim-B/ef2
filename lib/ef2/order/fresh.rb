@@ -1,32 +1,37 @@
 require_relative 'picking_strategy'
 require_relative 'fresh/pickers/first'
 require_relative 'fresh/pickers/random'
+require_relative 'fresh/filters/in_stock'
+require_relative 'fresh/filters/every'
 require_relative '../order/fresh/fresh_facade'
 require_relative '../progress'
-require_relative 'fresh/filters/in_stock'
 
 module EF2
   module Order
     class Fresh
 
-      def initialize credentials_provider
+      def initialize(credentials_provider)
         @credentials_provider = credentials_provider
-        @picking_strategy = EF2::PickingStrategy.new EF2::Pickers::Fresh::Random.new, EF2::Pickers::Fresh::First.new
-        @fresh_facade = FreshFacade.new credentials_provider
+        @product_picker = EF2::PickingStrategy.new EF2::Pickers::Fresh::First.new, EF2::Pickers::Fresh::Random.new
 
-        @picking_strategy.set_filters(EF2::Fresh::Filter::InStock.new(@fresh_facade))
+        EF2::Progress.set_stages 3
+
+        @fresh_facade = FreshFacade.new credentials_provider
+        @product_picker.set_filters(
+            EF2::Fresh::Filter::Every.new(@fresh_facade),
+            EF2::Fresh::Filter::InStock.new(@fresh_facade)
+        )
       end
 
       def order list
-        @fresh_facade.login
+        basket = list.pick @product_picker
+        pp basket
 
-        basket = list.pick @picking_strategy
-
-        EF2::Progress.set_order_size basket.size
+        EF2::Progress.start_stage(basket.size)
 
         basket.each do |item|
+          EF2::Progress.stage_progress "Ordering #{item}"
           @fresh_facade.order_product item
-          EF2::Progress.put_order item
         end
 
         EF2::Progress.done
