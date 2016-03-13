@@ -1,4 +1,4 @@
-require_relative 'collection_entry'
+require_relative 'product_entry'
 require_relative 'entry_registry'
 
 module ProductCollection
@@ -12,7 +12,7 @@ module ProductCollection
     if item.nil?
       raise 'List generation error: No product called ' + entry + ' has been defined'
     end
-    @products.push CollectionEntry.new item, &block
+    @products.push ProductEntry.new item, &block
   end
 
   def products

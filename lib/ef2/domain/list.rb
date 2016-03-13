@@ -2,6 +2,7 @@ require_relative 'product_collection'
 require_relative 'recipe_collection'
 require_relative '../order/fresh'
 require_relative '../logger'
+require_relative '../progress'
 
 module EF2
   module Domain
@@ -44,11 +45,15 @@ module EF2
       def pick strategy
         basket = Array.new
 
+        EF2::Progress.set_pick_size recipes.size + products.size
+
         recipes.each do |recipe|
+          EF2::Progress.put_pick recipe.entry.title
           basket.concat recipe.pick strategy
         end
 
         products.each do |product|
+          EF2::Progress.put_pick product.entry.title
           basket.concat product.pick(strategy)
         end
 

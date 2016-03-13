@@ -65,7 +65,7 @@ class FreshFacade
     product.in_stock = true
 
     name = product_page.at('.buying h1')
-    if name.nil
+    if name
       product.name = name.text.strip
     end
 
@@ -89,6 +89,7 @@ class FreshFacade
       product.stars = matches[0][1]
     end
 
+    return product
   end
 
   def order_product product

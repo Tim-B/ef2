@@ -1,8 +1,9 @@
-require_relative '../pickers/strategy'
-require_relative '../pickers/fresh/first'
-require_relative '../pickers/fresh/random'
+require_relative 'picking_strategy'
+require_relative 'fresh/pickers/first'
+require_relative 'fresh/pickers/random'
 require_relative '../order/fresh/fresh_facade'
 require_relative '../progress'
+require_relative 'fresh/filters/in_stock'
 
 module EF2
   module Order
@@ -10,8 +11,10 @@ module EF2
 
       def initialize credentials_provider
         @credentials_provider = credentials_provider
-        @picking_strategy = EF2::Pickers::Strategy.new EF2::Pickers::Fresh::Random.new, EF2::Pickers::Fresh::First.new
+        @picking_strategy = EF2::PickingStrategy.new EF2::Pickers::Fresh::Random.new, EF2::Pickers::Fresh::First.new
         @fresh_facade = FreshFacade.new credentials_provider
+
+        @picking_strategy.set_filters(EF2::Fresh::Filter::InStock.new(@fresh_facade))
       end
 
       def order list
