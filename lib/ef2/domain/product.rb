@@ -1,5 +1,5 @@
 require_relative 'entry'
-require_relative 'sku_collection'
+require_relative 'asin_collection'
 require_relative 'catalog_loader'
 
 module EF2
@@ -7,11 +7,11 @@ module EF2
     class Product
 
       include Entry
-      include SKUCollection
+      include ASINCollection
       include CatalogLoader
 
       def pick strategy, picker, quantity
-        picked = strategy.pick picker, skus, quantity
+        picked = strategy.pick picker, asins, quantity
         EF2::Log.info "Picked #{picked} for product #{title} using strategy #{picker}"
         picked
       end
