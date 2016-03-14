@@ -1,5 +1,7 @@
 # EF2: Elastic Fresh Formation
 
+[![Build Status](https://travis-ci.org/Tim-B/ef2.svg?branch=master)](https://travis-ci.org/Tim-B/ef2)
+
 Eliminate the operational burden of supporting your household by automating the deployment
 of your Amazon Fresh orders.
 
