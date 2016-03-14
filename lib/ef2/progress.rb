@@ -4,6 +4,15 @@ module EF2
   class Progress
     @bar = PowerBar.new
     @bar.settings.tty.finite.show_eta = false
+    @disabled = false
+
+    def self.disable
+      @disabled = true
+    end
+
+    def self.enable
+      @disabled = false
+    end
 
     def self.set_stages(stages)
       @stages = stages
@@ -21,11 +30,19 @@ module EF2
 
     def self.stage_progress(message)
       @progress += 1
-      @bar.show(:msg => message, :done => @progress, :total => @size)
+
+      unless @disabled
+        @bar.show(:msg => message, :done => @progress, :total => @size)
+      end
+
     end
 
     def self.done
-      @bar.show(:msg => 'Done', :done => 100, :total => 100)
+
+      unless @disabled
+        @bar.show(:msg => 'Done', :done => 100, :total => 100)
+      end
+
     end
   end
 end

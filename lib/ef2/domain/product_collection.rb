@@ -16,7 +16,7 @@ module ProductCollection
   end
 
   def products
-    @products
+    @products || Array.new
   end
 
 end

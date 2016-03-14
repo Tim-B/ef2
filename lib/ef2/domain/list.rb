@@ -17,6 +17,10 @@ module EF2
         instance_eval(File.read(list))
       end
 
+      def process_list &block
+        instance_eval &block
+      end
+
       def print_cart
         recipes.each do |recipe|
           puts 'Recipes:'

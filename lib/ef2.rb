@@ -5,6 +5,7 @@ require_relative 'ef2/domain/list'
 require_relative 'ef2/domain/product'
 require_relative 'ef2/domain/recipe'
 require_relative 'ef2/order/stdin_credentials_supplier'
+require_relative 'ef2/progress'
 
 class EF2CLI < Thor
 
@@ -16,9 +17,11 @@ class EF2CLI < Thor
     if options[:verbose]
       EF2::Log.verbose
     end
+    EF2::Progress.set_stages 3
 
     credentials_provider = STDINCredentialsSupplier.new self
-    order_handler = EF2::Order::Fresh.new credentials_provider
+    fresh_facade = FreshFacade.new credentials_provider
+    order_handler = EF2::Order::Fresh.new fresh_facade
 
     list = EF2::Domain::List.new
     list.read_list Dir.pwd + '/' + list_file

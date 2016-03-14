@@ -28,6 +28,13 @@ class FreshFacade
     product
   end
 
+  def order_product asin
+    product_page = @mechanize.get("https://fresh.amazon.com/product?asin=#{asin}")
+    product_page.form_with(:action => '/ShoppingCartView').submit
+  end
+
+  private
+
   def login
     @mechanize.get('https://fresh.amazon.com/')
     login = @mechanize.page.link_with(:text => 'Sign in').click
@@ -40,15 +47,7 @@ class FreshFacade
       captcha = @credentials_provider.get_captcha captcha_image
       perform_login credentials, after_login, captcha
     end
-
   end
-
-  def order_product product
-    product_page = @mechanize.get("https://fresh.amazon.com/product?asin=#{product}")
-    product_page.form_with(:action => '/ShoppingCartView').submit
-  end
-
-  private
 
   def load_product asin
     product_page = @mechanize.get("https://fresh.amazon.com/product?asin=#{asin}")
