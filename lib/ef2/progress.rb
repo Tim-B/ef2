@@ -4,21 +4,19 @@ module EF2
   class Progress
     @bar = PowerBar.new
     @bar.settings.tty.finite.show_eta = false
-    @disabled = false
+    @disabled = true
 
-    def self.disable
-      @disabled = true
-    end
-
-    def self.enable
-      @disabled = false
-    end
+    @stages = 0
+    @stage = 0
+    @progress = 0
+    @size = 0
 
     def self.set_stages(stages)
       @stages = stages
       @stage = 0
       @progress = 0
       @size = 0
+      @disabled = false
     end
 
     def self.start_stage(stage_size)

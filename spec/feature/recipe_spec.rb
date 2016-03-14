@@ -49,4 +49,16 @@ describe EF2 do
     expect(order).to eq %w(Basic_Product_2_Asin_1 Basic_Product_2_Asin_1 Basic_Product_2_Asin_1)
   end
 
+  it 'supports quantity in product' do
+
+    order = ListHarness.run_list do
+
+      recipe 'Basic Recipe 1' do
+        quantity 2
+      end
+
+    end
+
+    expect(order).to eq %w(Basic_Product_1_Asin_1 Basic_Product_2_Asin_1 Basic_Product_1_Asin_1 Basic_Product_2_Asin_1)
+  end
 end
