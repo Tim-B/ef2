@@ -1,5 +1,5 @@
 require 'mechanize'
-require 'Date'
+require 'date'
 require_relative '../product_data'
 require_relative '../../logger'
 require_relative '../../progress'
