@@ -6,11 +6,7 @@ module ASINCollection
   end
 
   def asins
-    @asins
-  end
-
-  def pick picker
-    picker.pick asins
+    @asins ||= Array.new
   end
 
 end

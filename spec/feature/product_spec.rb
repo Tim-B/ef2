@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 require_relative '../utils/list_harness'
 
-describe EF2 do
+describe 'A list with products' do
   it 'orders products' do
 
     order = ListHarness.run_list do

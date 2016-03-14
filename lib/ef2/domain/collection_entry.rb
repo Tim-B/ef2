@@ -8,10 +8,6 @@ class CollectionEntry
     (block.arity < 1 ? (instance_eval &block) : block.call(self)) if block_given?
   end
 
-  def entry(entry=nil)
-    entry.nil? ? @entry : @entry = entry
-  end
-
   def quantity(quantity=nil)
     quantity.nil? ? @quantity : @quantity = quantity
   end
