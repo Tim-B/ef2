@@ -50,6 +50,7 @@ class FreshFacade
   end
 
   def load_product asin
+    EF2::Log.info "Loading product #{asin}"
     product_page = @mechanize.get("https://fresh.amazon.com/product?asin=#{asin}")
 
     product = ProductData.new
@@ -75,10 +76,22 @@ class FreshFacade
         product.price = price_field.text.strip.delete('$')
       end
 
-      product.ratings = product_page.at('#numRated2MoonNBack').text.strip.delete('()')
-      star_img = product_page.at('#2MoonNBack').attributes['src'].text
-      matches = star_img.scan(/(.*)\/(.*?)\-star/)
-      product.stars = matches[0][1]
+      product_rating_num = product_page.at('#numRated2MoonNBack')
+
+      if product_rating_num
+        product.ratings = product_rating_num.text.strip.delete('()')
+      else
+        product.ratings = 0
+      end
+
+      star_img = product_page.at('#2MoonNBack')
+
+      if star_img
+        matches = star_img.attributes['src'].text.scan(/(.*)\/(.*?)\-star/)
+        product.stars = matches[0][1]
+      else
+        product.stars = 0
+      end
     end
 
     product.last_ordered = get_last_ordered asin

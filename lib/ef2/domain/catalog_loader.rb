@@ -3,14 +3,14 @@ require_relative '../logger'
 
 module CatalogLoader
 
-  include EntryRegistry
-
   module ClassMethods
     def load_dir dir
       Dir[dir + '/*'].each do |file|
         load_file file
       end
     end
+
+    private
 
     def load_file file
       instance = new

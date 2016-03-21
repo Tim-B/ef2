@@ -1,43 +1,27 @@
-require 'ef2/domain/collection_entry'
+require 'ef2/domain/product'
+require_relative 'entry_spec'
+require_relative 'asin_collection_spec'
+require_relative 'entry_registry_spec'
 
-describe CollectionEntry do
+describe EF2::Domain::Product do
 
-  it 'gets and sets entry' do
-
-    entry = double
-    collection_entry = CollectionEntry.new entry
-
-    expect(collection_entry.entry).to eq entry
-  end
-
-  it 'gets and sets quantity' do
-
-    entry = double
-    strategy = double
-    allow(entry).to receive(:pick) { %w(a b c) }
-
-    collection_entry = CollectionEntry.new entry do
-      quantity 5
-    end
-
-    expect(entry).to receive(:pick).with(strategy, :first, collection_entry, 5)
-    picked = collection_entry.pick strategy
-
-    expect(picked).to eq %w(a b c)
-    expect(collection_entry.quantity).to eq 5
-  end
+  it_behaves_like 'an entry'
+  it_behaves_like 'an ASIN collection'
+  it_behaves_like 'a catalog loader'
 
   it 'picks' do
-    entry = double
     strategy = double
-    allow(entry).to receive(:pick) { %w(a b c) }
+    allow(strategy).to receive(:pick) { %w(a b c) }
+    entry = double
 
-    collection_entry = CollectionEntry.new entry
+    expect(strategy).to receive(:pick).with(:first, entry,['abc123'],  5)
 
-    expect(entry).to receive(:pick).with(strategy, :first, collection_entry, 1)
-    picked = collection_entry.pick strategy
+    product = EF2::Domain::Product.new
+    product.asin 'abc123'
+    picked = product.pick strategy, :first, entry, 5
 
     expect(picked).to eq %w(a b c)
   end
 
 end
+

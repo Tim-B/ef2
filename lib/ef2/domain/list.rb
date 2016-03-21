@@ -10,14 +10,14 @@ module EF2
       include ProductCollection
       include RecipeCollection
 
-      def read_list list
+      def read_list(list)
         cat_dir = File.dirname(list) + '/catalog'
         EF2::Log.info "Loading list #{list}"
         load_catalog cat_dir
         instance_eval(File.read(list))
       end
 
-      def process_list &block
+      def process_list(&block)
         instance_eval &block
       end
 
@@ -36,17 +36,16 @@ module EF2
         end
       end
 
-      def form order_handler
-        #print_cart
+      def form(order_handler)
         order_handler.order self
       end
 
-      def load_catalog cat_dir
+      def load_catalog(cat_dir)
         EF2::Domain::Product.load_dir(cat_dir + '/products')
         EF2::Domain::Recipe.load_dir(cat_dir + '/recipes')
       end
 
-      def pick product_picker
+      def pick(product_picker)
         basket = Array.new
 
         EF2::Progress.start_stage recipes.size + products.size
